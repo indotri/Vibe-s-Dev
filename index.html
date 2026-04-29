@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe's Dev | Web & Hosting Solutions</title>
+    <style>
+        /* === RESET & BASE STYLES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a; /* Warna dasar gelap (Dark Slate) */
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* === BACKGROUND BLOBS (Untuk efek pantulan kaca/Liquid) === */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 12s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #00897b; /* Teal Leaflet */
+        }
+
+        .blob-2 {
+            bottom: 10%;
+            right: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: #f57c00; /* Oranye Leaflet */
+            animation-direction: alternate-reverse;
+            animation-duration: 15s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 30%;
+            width: 30vw;
+            height: 30vw;
+            background: #0277bd; /* Biru Gelap Leaflet */
+            animation-duration: 10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 80px) scale(1.1); }
+        }
+
+        /* === LIQUID GLASS EFFECT (iOS 26 Style) === */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            border-left: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 28px;
+        }
+
+        /* === LAYOUT & COMPONENTS === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            margin-top: 1rem;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        nav h1 span {
+            color: #f57c00;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f57c00, #e65100);
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(245, 124, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(245, 124, 0, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 120px 0 80px 0;
+        }
+
+        .hero h2 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, #ffffff, #b2dfdb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            color: #cfd8dc;
+            line-height: 1.6;
+        }
+
+        /* Grid Layouts */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #80cbc4;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        /* Cards */
+        .card {
+            padding: 2.5rem;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .card .icon {
+            font-size: 2.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .card p {
+            color: #b0bec5;
+            line-height: 1.6;
+        }
+
+        .card ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .card ul li {
+            color: #eceff1;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul li::before {
+            content: "✓";
+            color: #f57c00;
+            font-weight: bold;
+        }
+
+        /* Promo Banner */
+        .promo {
+            text-align: center;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            background: linear-gradient(135deg, rgba(0, 137, 123, 0.2), rgba(245, 124, 0, 0.2));
+        }
+
+        .promo h3 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .promo span {
+            color: #f57c00;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #78909c;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            nav { flex-direction: column; gap: 1rem; border-radius: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="container">
+        <nav class="liquid-glass">
+            <h1>VIBE'S<span>DEV</span></h1>
+            <a href="#" class="btn-primary">Hubungi Kami</a>
+        </nav>
+
+        <header class="hero">
+            <h2>Tingkatkan Bisnismu<br>ke Level Digital!</h2>
+            <p>Di era digital, website adalah aset paling berharga. Jadikan bisnismu lebih profesional, terpercaya, dan mudah ditemukan oleh jutaan pelanggan di internet dengan ekosistem digital dari Vibe's Dev.</p>
+            <a href="#layanan" class="btn-primary">Lihat Layanan Kami</a>
+        </header>
+
+        <h3 class="section-title">Nilai Utama Layanan Kami</h3>
+        <section class="grid-3">
+            <div class="card liquid-glass tilt-effect">
+                <div class="icon">🎨</div>
+                <h3>Desain Custom & Modern</h3>
+                <p>Tampilan web responsif (mobile-friendly) yang dirancang khusus menyesuaikan identitas brand Anda. Tampil sempurna di semua perangkat.</p>
+            </div>
+            <div class="card liquid-glass tilt-effect">
+                <div class="icon">⚡</div>
+                <h3>Performa & Keamanan</h3>
+                <p>Didukung oleh arsitektur server yang optimal untuk memastikan kecepatan akses yang tinggi dan perlindungan data yang kuat.</p>
+            </div>
+            <div class="card liquid-glass tilt-effect">
+                <div class="icon">🛠️</div>
+                <h3>Support & Maintenance</h3>
+                <p>Kami tidak hanya membuat, tapi merawat. Kami memberikan dukungan teknis penuh dan konsultasi gratis setelah web live.</p>
+            </div>
+        </section>
+
+        <h3 class="section-title" id="layanan">Solusi Digital Terpadu</h3>
+        <section class="grid-2">
+            <div class="card liquid-glass tilt-effect">
+                <div class="icon">💻</div>
+                <h3>Jasa Pembuatan Website</h3>
+                <p>Kami merancang website yang cepat, fungsional, dan mendatangkan hasil. Sempurna untuk *Company Profile*, Toko Online, maupun Sistem Kustom.</p>
+                <ul>
+                    <li>UI/UX Design Kekinian</li>
+                    <li>Struktur SEO Ready (Ramah Google)</li>
+                    <li>Sistem yang Kuat & Skalabel</li>
+                </ul>
+            </div>
+            <div class="card liquid-glass tilt-effect">
+                <div class="icon">☁️</div>
+                <h3>Layanan Sewa Hosting</h3>
+                <p>Website hebat butuh pondasi yang kuat. Hosting kami menjamin stabilitas agar bisnis Anda selalu *online* 24/7 tanpa kendala.</p>
+                <ul>
+                    <li>Server Generasi Terbaru (Anti Lemot)</li>
+                    <li>Uptime 99.9% Guarantee</li>
+                    <li>Gratis Sertifikat SSL & Backup Berkala</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="promo liquid-glass tilt-effect">
+            <h3>Spesial Promo <span>Tahun Ini!</span></h3>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Pesan paket pembuatan website sekarang dan dapatkan GRATIS Domain & Hosting untuk tahun pertama.</p>
+            <a href="#" class="btn-primary">Klaim Promo Sekarang</a>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Vibe's Dev - Web & Hosting Solutions. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.tilt-effect');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const tiltX = (y - centerY) / 20;
+                const tiltY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+    </script>
+</body>
+</html>
