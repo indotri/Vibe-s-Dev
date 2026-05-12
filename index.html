@@ -7,251 +7,127 @@
     <style>
         /* === RESET & BASE STYLES === */
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            scroll-behavior: smooth; /* Smooth scrolling untuk menu navigasi */
         }
 
         body {
-            background-color: #0f172a; /* Warna dasar gelap (Dark Slate) */
+            background-color: #0f172a; 
             color: #ffffff;
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
         }
 
-        /* === BACKGROUND BLOBS (Untuk efek pantulan kaca/Liquid) === */
+        /* === OPTIMIZED BACKGROUND BLOBS === */
         .blob {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
-            filter: blur(90px);
+            filter: blur(80px);
             z-index: -1;
-            opacity: 0.6;
-            animation: float 12s infinite ease-in-out alternate;
+            opacity: 0.4;
+            will-change: transform;
+            animation: float 15s infinite ease-in-out alternate;
         }
-
-        .blob-1 {
-            top: -10%;
-            left: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: #00897b; /* Teal Leaflet */
-        }
-
-        .blob-2 {
-            bottom: 10%;
-            right: -10%;
-            width: 40vw;
-            height: 40vw;
-            background: #f57c00; /* Oranye Leaflet */
-            animation-direction: alternate-reverse;
-            animation-duration: 15s;
-        }
-
-        .blob-3 {
-            top: 40%;
-            left: 30%;
-            width: 30vw;
-            height: 30vw;
-            background: #0277bd; /* Biru Gelap Leaflet */
-            animation-duration: 10s;
-        }
+        .blob-1 { top: -5%; left: -10%; width: 50vw; height: 50vw; background: #00897b; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: #f57c00; animation-direction: alternate-reverse; animation-duration: 20s; }
+        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; background: #0277bd; animation-duration: 25s; opacity: 0.3; }
 
         @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(60px, 80px) scale(1.1); }
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(40px, 60px, 0) scale(1.1); }
         }
 
-        /* === LIQUID GLASS EFFECT (iOS 26 Style) === */
+        /* === LIQUID GLASS EFFECT === */
         .liquid-glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
-            border-left: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            border-radius: 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
         }
 
         /* === LAYOUT & COMPONENTS === */
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
+            max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1;
         }
 
-        /* Navbar */
+        /* Sticky Navbar */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            margin-top: 1rem;
+            position: sticky; top: 20px; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 2rem; margin: 0 auto 2rem auto;
+            max-width: 1150px;
         }
+        nav h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5px; }
+        nav h1 span { color: #f57c00; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: #cfd8dc; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: #f57c00; }
 
-        nav h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #fff;
+        /* Buttons */
+        .btn-primary, .btn-wa, .btn-email {
+            color: #fff; padding: 0.8rem 1.8rem; border-radius: 100px;
+            text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+            transition: all 0.3s ease; border: none; cursor: pointer;
         }
+        .btn-primary { background: linear-gradient(135deg, #f57c00, #e65100); box-shadow: 0 4px 15px rgba(245, 124, 0, 0.3); }
+        .btn-wa { background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); font-size: 1.1rem; padding: 1rem 2rem;}
+        .btn-email { background: linear-gradient(135deg, #0288d1, #01579b); box-shadow: 0 4px 15px rgba(2, 136, 209, 0.3); font-size: 1.1rem; padding: 1rem 2rem;}
+        
+        .btn-primary:hover, .btn-wa:hover, .btn-email:hover { transform: translateY(-3px); }
 
-        nav h1 span {
-            color: #f57c00;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #f57c00, #e65100);
-            color: #fff;
-            padding: 0.8rem 1.8rem;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(245, 124, 0, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(245, 124, 0, 0.6);
-        }
+        /* Typography & Spacing */
+        section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 1rem; color: #fff; }
+        .section-subtitle { text-align: center; color: #80cbc4; margin-bottom: 3rem; font-size: 1.1rem; }
 
         /* Hero Section */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 120px 0 80px 0;
-        }
+        .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 100px 0 60px 0; min-height: 80vh; justify-content: center;}
+        .hero h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 1.5rem; line-height: 1.2; background: linear-gradient(to right, #ffffff, #b2dfdb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        .hero p { font-size: 1.2rem; max-width: 700px; margin-bottom: 2.5rem; color: #cfd8dc; line-height: 1.6; }
 
-        .hero h2 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(to right, #ffffff, #b2dfdb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin-bottom: 2.5rem;
-            color: #cfd8dc;
-            line-height: 1.6;
-        }
-
-        /* Grid Layouts */
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: #80cbc4;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 5rem;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 2rem;
-            margin-bottom: 5rem;
-        }
-
+        /* Grids */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        
         /* Cards */
-        .card {
-            padding: 2.5rem;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+        .card { padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 1rem; transition: background 0.3s; }
+        .card .icon { font-size: 2.5rem; }
+        .card h3 { font-size: 1.4rem; color: #fff; }
+        .card p { color: #b0bec5; line-height: 1.6; }
+        .card ul { list-style: none; margin-top: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1.5rem; flex-grow: 1;}
+        .card ul li { color: #eceff1; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 10px; }
+        .card ul li::before { content: "✓"; color: #00bfa5; font-weight: bold; }
 
-        .card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.08);
-            border-top: 1px solid rgba(255, 255, 255, 0.4);
-            border-left: 1px solid rgba(255, 255, 255, 0.4);
-        }
+        /* Pricing Specific */
+        .pricing-card { position: relative; }
+        .pricing-card h4 { color: #f57c00; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .pricing-card .price { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 1rem; }
+        .pricing-card .price span { font-size: 1rem; color: #b0bec5; font-weight: 400; }
+        .pricing-card.featured { border: 1px solid rgba(245, 124, 0, 0.5); transform: scale(1.05); background: rgba(245, 124, 0, 0.1); }
+        .featured-badge { position: absolute; top: -15px; right: 20px; background: #f57c00; color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
 
-        .card .icon {
-            font-size: 2.5rem;
-        }
+        /* Contact Section */
+        .contact-box { text-align: center; padding: 4rem 2rem; margin: 2rem 0; }
+        .contact-flex { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; flex-wrap: wrap; }
 
-        .card h3 {
-            font-size: 1.5rem;
-            color: #fff;
-        }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: #78909c; margin-top: 2rem; }
 
-        .card p {
-            color: #b0bec5;
-            line-height: 1.6;
-        }
-
-        .card ul {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .card ul li {
-            color: #eceff1;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card ul li::before {
-            content: "✓";
-            color: #f57c00;
-            font-weight: bold;
-        }
-
-        /* Promo Banner */
-        .promo {
-            text-align: center;
-            padding: 4rem 2rem;
-            margin: 4rem 0;
-            background: linear-gradient(135deg, rgba(0, 137, 123, 0.2), rgba(245, 124, 0, 0.2));
-        }
-
-        .promo h3 {
-            color: #fff;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .promo span {
-            color: #f57c00;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #78909c;
-            margin-top: 4rem;
-        }
-
-        /* Responsive */
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr; }
-            nav { flex-direction: column; gap: 1rem; border-radius: 20px; }
+            nav { flex-direction: column; gap: 1rem; border-radius: 20px; padding: 1rem; }
+            .nav-links { display: none; /* Sembunyikan link di mobile agar rapi, fokus ke tombol CTA */ }
+            .pricing-card.featured { transform: scale(1); } /* Hilangkan efek scale di HP agar tidak meluber */
+            .btn-wa, .btn-email { width: 100%; justify-content: center; }
+            .hero h2 { font-size: 2.5rem; }
+        }
+
+        @media (hover: hover) {
+            .card:hover { background: rgba(255, 255, 255, 0.08); }
         }
     </style>
 </head>
@@ -261,94 +137,143 @@
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
 
-    <div class="container">
-        <nav class="liquid-glass">
-            <h1>VIBE'S<span>DEV</span></h1>
-            <a href="#" class="btn-primary">Hubungi Kami</a>
-        </nav>
+    <nav class="liquid-glass">
+        <h1>VIBE'S<span>DEV</span></h1>
+        <div class="nav-links">
+            <a href="#layanan">Layanan</a>
+            <a href="#harga">Harga</a>
+            <a href="#kontak">Hubungi Kami</a>
+        </div>
+    </nav>
 
+    <div class="container">
         <header class="hero">
-            <h2>Tingkatkan Bisnismu<br>ke Level Digital!</h2>
-            <p>Di era digital, website adalah aset paling berharga. Jadikan bisnismu lebih profesional, terpercaya, dan mudah ditemukan oleh jutaan pelanggan di internet dengan ekosistem digital dari Vibe's Dev.</p>
-            <a href="#layanan" class="btn-primary">Lihat Layanan Kami</a>
+            <h2>Bangun Identitas<br>Digital Bisnismu</h2>
+            <p>Vibe's Dev menggabungkan keahlian desain UI/UX yang modern dengan infrastruktur teknologi yang kuat. Kami siap membawa ide Anda menjadi nyata.</p>
+            <a href="#kontak" class="btn-primary">Mulai Proyek Anda 🚀</a>
         </header>
 
-        <h3 class="section-title">Nilai Utama Layanan Kami</h3>
-        <section class="grid-3">
-            <div class="card liquid-glass tilt-effect">
-                <div class="icon">🎨</div>
-                <h3>Desain Custom & Modern</h3>
-                <p>Tampilan web responsif (mobile-friendly) yang dirancang khusus menyesuaikan identitas brand Anda. Tampil sempurna di semua perangkat.</p>
-            </div>
-            <div class="card liquid-glass tilt-effect">
-                <div class="icon">⚡</div>
-                <h3>Performa & Keamanan</h3>
-                <p>Didukung oleh arsitektur server yang optimal untuk memastikan kecepatan akses yang tinggi dan perlindungan data yang kuat.</p>
-            </div>
-            <div class="card liquid-glass tilt-effect">
-                <div class="icon">🛠️</div>
-                <h3>Support & Maintenance</h3>
-                <p>Kami tidak hanya membuat, tapi merawat. Kami memberikan dukungan teknis penuh dan konsultasi gratis setelah web live.</p>
-            </div>
-        </section>
-
-        <h3 class="section-title" id="layanan">Solusi Digital Terpadu</h3>
-        <section class="grid-2">
-            <div class="card liquid-glass tilt-effect">
-                <div class="icon">💻</div>
-                <h3>Jasa Pembuatan Website</h3>
-                <p>Kami merancang website yang cepat, fungsional, dan mendatangkan hasil. Sempurna untuk *Company Profile*, Toko Online, maupun Sistem Kustom.</p>
-                <ul>
-                    <li>UI/UX Design Kekinian</li>
-                    <li>Struktur SEO Ready (Ramah Google)</li>
-                    <li>Sistem yang Kuat & Skalabel</li>
-                </ul>
-            </div>
-            <div class="card liquid-glass tilt-effect">
-                <div class="icon">☁️</div>
-                <h3>Layanan Sewa Hosting</h3>
-                <p>Website hebat butuh pondasi yang kuat. Hosting kami menjamin stabilitas agar bisnis Anda selalu *online* 24/7 tanpa kendala.</p>
-                <ul>
-                    <li>Server Generasi Terbaru (Anti Lemot)</li>
-                    <li>Uptime 99.9% Guarantee</li>
-                    <li>Gratis Sertifikat SSL & Backup Berkala</li>
-                </ul>
+        <section id="layanan">
+            <h2 class="section-title">Solusi Digital Terpadu</h2>
+            <p class="section-subtitle">Semua yang Anda butuhkan untuk sukses di dunia maya</p>
+            
+            <div class="grid-3">
+                <div class="card liquid-glass tilt-effect">
+                    <div class="icon">💻</div>
+                    <h3>Pembuatan Website</h3>
+                    <p>Desain kustom yang responsif, modern, dan siap bersaing di mesin pencari (Google).</p>
+                </div>
+                <div class="card liquid-glass tilt-effect">
+                    <div class="icon">☁️</div>
+                    <h3>Cloud Hosting</h3>
+                    <p>Server cepat dengan Uptime 99.9%, memastikan web Anda tidak pernah down.</p>
+                </div>
+                <div class="card liquid-glass tilt-effect">
+                    <div class="icon">🛠️</div>
+                    <h3>Maintenance & Support</h3>
+                    <p>Dukungan teknis penuh dan pemeliharaan berkala untuk keamanan data Anda.</p>
+                </div>
             </div>
         </section>
 
-        <section class="promo liquid-glass tilt-effect">
-            <h3>Spesial Promo <span>Tahun Ini!</span></h3>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Pesan paket pembuatan website sekarang dan dapatkan GRATIS Domain & Hosting untuk tahun pertama.</p>
-            <a href="#" class="btn-primary">Klaim Promo Sekarang</a>
+        <section id="harga">
+            <h2 class="section-title">Paket Investasi</h2>
+            <p class="section-subtitle">Harga transparan tanpa biaya tersembunyi</p>
+            
+            <div class="grid-3">
+                <div class="card pricing-card liquid-glass tilt-effect">
+                    <h4>Starter</h4>
+                    <div class="price">Mulai Rp 259K<span>/thn</span></div>
+                    <p>Cocok untuk UMKM atau personal branding pemula.</p>
+                    <ul>
+                        <li>Desain Landing Page Modern</li>
+                        <li>Mobile Responsive</li>
+                        <li>Gratis Hosting 1 Tahun</li>
+                        <li>Gratis SSL (Keamanan)</li>
+                        <li>Revisi Minor 2x</li>
+                    </ul>
+                    <a href="#kontak" class="btn-primary" style="text-align: center;">Pilih Paket</a>
+                </div>
+
+                <div class="card pricing-card featured liquid-glass tilt-effect">
+                    <div class="featured-badge">TERPOPULER</div>
+                    <h4>Business Pro</h4>
+                    <div class="price">Mulai Rp 1299K<span>/thn</span></div>
+                    <p>Sempurna untuk profil perusahaan dan katalog produk.</p>
+                    <ul>
+                        <li>Desain Multi-Halaman Custom</li>
+                        <li>Optimasi SEO Dasar</li>
+                        <li>Gratis Domain (.com/.id)</li>
+                        <li>Gratis Hosting Premium</li>
+                        <li>Integrasi WhatsApp/Chat</li>
+                        <li>Support Teknis Prioritas</li>
+                    </ul>
+                    <a href="#kontak" class="btn-primary" style="text-align: center;">Pilih Paket</a>
+                </div>
+
+                <div class="card pricing-card liquid-glass tilt-effect">
+                    <h4>Enterprise</h4>
+                    <div class="price">Mulai Rp 699K<span>/thn</span></div>
+                    <p>Untuk aplikasi web kompleks dan e-commerce berskala besar.</p>
+                    <ul>
+                        <li>Sistem Web Kustom (Laravel/Node.js)</li>
+                        <li>Database & Manajemen User</li>
+                        <li>Server VPS Dedicated</li>
+                        <li>Desain UI/UX Eksklusif</li>
+                        <li>Maintenance Bulanan</li>
+                    </ul>
+                    <a href="#kontak" class="btn-primary" style="text-align: center;">Pilih paket</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontak">
+            <div class="contact-box liquid-glass">
+                <h2 class="section-title">Siap Memulai?</h2>
+                <p style="color: #b0bec5; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                    Konsultasikan kebutuhan website Anda sekarang. Tim Vibe's Dev siap memberikan solusi terbaik sesuai budget Anda.
+                </p>
+                
+                <div class="contact-flex">
+                    <a href="https://wa.me/6281334158775?text=Halo%20Vibe's%20Dev,%20saya%20tertarik%20untuk%20konsultasi%20mengenai%20jasa%20pembuatan%20website/hosting." target="_blank" class="btn-wa">
+                        Chat WhatsApp
+                    </a>
+                    
+                    <a href="mailto:hello@vibesdev.com?subject=Tanya%20Jasa%20Website%20Vibe's%20Dev" class="btn-email">
+                        Kirim Email
+                    </a>
+                </div>
+            </div>
         </section>
 
         <footer>
-            <p>&copy; 2026 Vibe's Dev - Web & Hosting Solutions. All rights reserved.</p>
+            <p>&copy; 2026 Vibe's Dev - Web & Hosting Solutions. Dikembangkan oleh Pratindo. All rights reserved.</p>
         </footer>
     </div>
 
     <script>
-        const cards = document.querySelectorAll('.tilt-effect');
-        
-        cards.forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const tiltX = (y - centerY) / 20;
-                const tiltY = (centerX - x) / 20;
-                
-                card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+        if (window.matchMedia("(hover: hover)").matches) {
+            const cards = document.querySelectorAll('.tilt-effect');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const tiltX = (y - centerY) / 30;
+                    const tiltY = (centerX - x) / 30;
+                    card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    if(card.classList.contains('featured')){
+                        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05)`;
+                    } else {
+                        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                    }
+                });
             });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            });
-        });
+        }
     </script>
 </body>
 </html>
